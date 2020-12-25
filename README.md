@@ -10,6 +10,8 @@ Main Directories :
 
 **rep** : reports folder
 
+**dist** : distributable folder
+
 Architecture :
 -----------------
 https://www.gloomaps.com/qfaZh6WoRh
