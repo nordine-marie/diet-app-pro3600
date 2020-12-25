@@ -1,0 +1,212 @@
+<div class="w3-sidebar w3-bar-block w3-card-4" style="width:30%;position: relative;top: 53px;">
+  <a href="#/settings" class="w3-bar-item w3-button"><i class="fa fa-user" style="margin-right:3px;"></i>Profil</a>
+  <a ui-sref="settings({'#': 'Fcards'})" class="w3-light-grey w3-bar-item w3-button"><i class="fa fa-credit-card" style="margin-right:3px;"></i>Cartes</a>
+  <a ui-sref="settings({'#': 'Favprod'})" class="w3-bar-item w3-button"><i class="fa fa-heart" style="margin-right:3px;"></i>Favoris</a>
+  <a ui-sref="settings({'#': 'Allerg'})" class="w3-light-grey w3-bar-item w3-button"><i class="fa fa-stethoscope" style="margin-right:3px;"></i><span style="font-size: 11px">Allergènes</span></a>
+  <a ui-sref="settings({'#': 'Promo'})" class="w3-bar-item w3-button"><i class="fa fa-tag" style="margin-right:3px;"></i>Promo</a>
+  <a ui-sref="help" class="w3-light-grey w3-bar-item w3-button"><i class="fa fa-question-circle" style="margin-right:3px;"></i>Support</a>
+
+</div>
+
+<div style="margin-left:30%">
+
+
+
+  <div class="w3-margin" ng-controller="SettingsController">
+
+    <br>
+    <div class="w3-card-4 w3-round-large">
+      <header class="w3-light-grey w3" style="text-align: center;">
+        <h4><i class="fa fa-user" style="margin-right: 12px;"></i>Profil Utilisateur</h4>
+      </header>
+      <form>
+        <p style="margin-right: 20px;margin-left: 20px;">
+
+          <label><strong>Prénom :</strong></label>
+          <input ng-model="surname" class="w3-input w3-border w3-round" type="text" required>
+          <br>
+
+          <label style="margin-top: 5px"><strong>Âge :</strong></label>
+          <input ng-model="age" class="w3-input w3-border w3-round" type="number" required>
+          <br>
+
+          <label style="margin-right: 10px;margin-bottom: 5px;margin-top: 5px"><strong>Genre :</strong></label>
+          <br>
+          <label style="margin-right: 40px">
+            <input type="radio" ng-model="gender" value="0">
+            Homme
+          </label><br>
+
+          <label>
+            <input type="radio" ng-model="gender" value="1">
+            Femme
+          </label>
+          <br>
+          <br>
+          <label><strong>Profil diététique choisi :</strong></label><br>
+
+          <label style="margin-right: 20px">
+            <input type="radio" ng-model="profile" value="loseweight">
+            Minceur
+          </label><br>
+
+          <label style="margin-right: 20px">
+            <input type="radio" ng-model="profile" value="healthy">
+            Santé
+          </label><br>
+
+          <label>
+            <input type="radio" ng-model="profile" value="gainweight">
+            Sportif
+          </label>
+
+          <br><br>
+          <input ng-click="update()" type="submit" class="w3-btn w3-red w3-round w3-right" value="Sauvegarder">
+
+        </p>
+      </form>
+
+      <br id='Fcards'>
+      <br>
+    </div>
+  </div>
+
+
+  <div class="w3-margin" ng-controller="FidelityController">
+    <div class="w3-card-4 w3-round-large" style="padding-bottom: 35px;">
+      <header class="w3-light-grey w3" style="text-align: center;">
+        <h4><i class="fa fa-credit-card" style="margin-right: 12px;"></i>Cartes de Fidélité</h4>
+      </header>
+
+      <li ng-repeat="card in Fcards" class="w3-bar" style="list-style: none;">
+        <span ng-click="remFcard(card.code)" onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right w3-hover-red w3-round-large">&times;</span>
+        <div ng-click="displayModal(card.code)" style="margin-left: 15px;align-items: center;">
+          <h6 style="margin-right: 5px;margin-left: 13px">{{card.name}}</h6>
+          <label style="font-style=oblique; color: rgba(100,100,100,0.5);">{{card.code}}</label>
+          <!---  <i class="fa fa-barcode w3-xlarge" style="margin-left: 10px"></i> ---->
+        </div>
+
+        <hr>
+        <!----Fidelity Modal card -------->
+        <div id="id_{{card.code}}" class="w3-modal" style="">
+          <br>
+          <div class="w3-modal-content w3-card-4 w3-round">
+            <div class="w3-container">
+              <span ng-click="displayModal(card.code)" class="w3-button w3-display-topright w3-hover-red w3-round">&times;</span>
+              <div class="" style="text-align: center; padding-bottom: 20px;">
+
+                <h5>{{card.name}}</h5>
+                <img src="{{card.imgsrc}}" alt="fidelity card bar code">
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!------------------------------->
+
+      </li>
+
+      <button ng-click="displayModal('addfcard')" class="w3-btn w3-light-grey w3-right w3-round" style="margin-top:-8px;margin-right: 5px;"><i class="fa fa-plus"></i></button>
+      <!----Add Fidelity card Modal -------->
+      <div id="id_addfcard" class="w3-modal" style="">
+        <br>
+        <div class="w3-modal-content w3-card-4 w3-round">
+          <div class="w3-container">
+            <span ng-click="displayModal('addfcard')" class="w3-button w3-display-topright w3-hover-red w3-round">&times;</span>
+
+            <h4 style="text-align: center"><i class="fa fa-credit-card" style="margin-right: 15px"></i>Nouvelle carte de fidélité</h4>
+
+            <label style="display: flex;align-items: center">
+              <span style="width : 17%;"><strong>Initulé :</strong></span>
+              <input type="text" style="width: 50%" class="w3-input w3-border" ng-model="newname" required>
+            </label>
+            <label style="display: flex;align-items: center">
+              <span style="width : 17%"><strong>Code :</strong></span>
+              <input type="text" style="width: 83%;" class="w3-input w3-border" ng-model="newcode" required>
+            </label>
+
+            <input ng-click="addnewcard()" style="margin:5px;" type="submit" class="w3-btn w3-red w3-round w3-right" value="Ajouter">
+
+
+
+          </div>
+        </div>
+      </div>
+      <span id="Favprod"></span>
+    </div>
+
+    <!------------------------------->
+
+    <br>
+
+
+
+
+
+
+
+  </div>
+
+  <div class="w3-margin" ng-controller="SettingsController">
+    <div class="w3-card-4 w3-round-large" style="padding-bottom: 35px;">
+      <header class="w3-light-grey w3" style="text-align: center;">
+        <h4><i class="fa fa-heart" style="margin-right: 12px;"></i>Favoris</h4>
+      </header>
+      <span style="margin-left: 10px;" id='notfavyet'></span>
+      <li ng-repeat="product in favproducts" class="w3-bar" style="list-style: none;">
+        <span ng-click="delfav(product.code)" onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right w3-hover-red w3-round-large">&times;</span>
+        <div style="display: flex; margin-left: 15px;align-items: center;">
+          <img src="{{product.image_front_thumb_url}}" alt="{{product.generic_name}}" class="w3-bar-item" style="height:100px; width: auto ;">
+          <h6 style="margin-right: 5px;margin-left: 13px">{{product.product_name}}</h6>
+        </div>
+
+        <hr>
+      </li>
+    </div>
+    <br>
+  </div>
+<!-------Work in progress
+  <div id="Allerg" class="w3-margin" ng-controller="">
+    <div class="w3-card-4 w3-round-large" style="padding-bottom: 35px;">
+      <header class="w3-light-grey w3" style="text-align: center;">
+        <h4><i class="fa fa-stethoscope" style="margin-right: 12px;"></i>Allergènes</h4>
+      </header>
+      <br>
+      <h6 style="margin-right: 20px;margin-left: 20px;">
+        <i style="margin-right: 5px;" class="fa fa-code"></i>In work !
+      </h6>
+
+
+    </div>
+    <br>
+  </div>
+
+  <div id="Promo" class="w3-margin" ng-controller="">
+    <div class="w3-card-4 w3-round-large" style="padding-bottom: 35px;">
+      <header class="w3-light-grey w3" style="text-align: center;">
+        <h4><i class="fa fa-tag" style="margin-right: 12px;"></i>Promotion</h4>
+      </header>
+      <br>
+      <h6 style="margin-right: 20px;margin-left: 20px;">
+        <i style="margin-right: 5px;" class="fa fa-code"></i>In work !
+      </h6>
+
+
+    </div>
+    <br>
+  </div>
+------------>
+
+
+
+
+
+
+
+</div>
+
+
+
+</div>

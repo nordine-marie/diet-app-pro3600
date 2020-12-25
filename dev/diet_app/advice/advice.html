@@ -1,0 +1,129 @@
+<div class="w3-margin" ng-controller="AdviceController">
+
+  <!----- Formulaire de conseils ----------->
+  <br>
+
+  <div class="w3-card-4 w3-round-large">
+    <header class="w3-container w3-round w3-light-grey">
+      <h3>
+        <img src="assets/equilibre.svg" style="width:35px;height:auto;" alt="logo repas equilibre">
+        Conseils Diététiques
+      </h3>
+    </header>
+
+    <div>
+      <canvas width="" height="" style="margin-left: 5px;" id="line" class="chart chart-bar" chart-data="data" chart-labels="labels"></canvas>
+      <div style="font-style: italic;text-align: center; font-size: 15px"><span style="color: rgb(152,187,215);margin-right:20px;">Recommandé</span><span style="color: rgb(150,150,150);"> Actuellement</span></div><br>
+    </div>
+
+
+    <div style="margin :  0px 10px 10px 10px;">
+      <span style="font-size: 20px;margin-left : 5px"><strong>Apport calorique journalier:</strong></span>
+      <div id="energyPBar" class="w3-light-grey" style="margin-left: 5px; margin-right: 5px;margin-bottom: 5px;">
+        <div class="w3-green w3-center w3-container" style="height:24px;width:{{energyRatio}}%"></div>
+      </div>
+    </div>
+
+    <div class='w3-light-grey w3-round' style='margin-left:10px;margin-right:10px;margin-bottom:10px;padding-left : 20px;padding-right : 20px;padding-top:5px;padding-bottom:5px;'>
+      <h5><i class='fa fa-balance-scale' style='margin-right: 5px;'></i>Conseils d'articles : </h5>
+      <div  style="display: flex; text-align:center">
+        <li ng-repeat='advproduct in advicedproducts' style="list-style: none;width:50%;">
+          <div style="display: flex;">
+            <img style="max-width: 50%; height: auto;" src="{{advproduct.image_front_thumb_url}}" alt="{{advproduct.generic_name}}">
+            <button ng-click="add(advproduct)" class="w3-btn w3-circle w3-green w3-right w3-card-4" style="margin: 20px;margin-left: 5px;" type="button"><i class="fa fa-cart-plus"></i></button>
+          </div>
+        </li>
+      </div>
+      <br>
+
+    </div>
+    <br>
+
+
+
+
+
+
+
+
+    <div ng-show="showPanier">
+      <img src="assets/meal.svg" style="width:60px;height:auto;display: block;margin-right: auto;margin-left: auto;" alt="a meal icon">
+
+      <hr>
+      <div style="text-align: justify;padding-right: 10px;padding-left: 10px;">
+
+        <strong>Panier :</strong> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere accusamus quisquam ab consequatur earum atque, maiores fugiat voluptatum, debitis aperiam cum? Voluptatum qui, voluptates velit libero labore eveniet,
+        provident fugit.
+      </div>
+
+
+
+      <br>
+
+    </div>
+
+
+
+
+  </div>
+
+  <!--------New user Modal ----------------->
+  <div id="id_newuser" class="w3-modal">
+    <br>
+    <div class="w3-modal-content w3-card-4 w3-round">
+      <div class="w3-container">
+        <h4 style="text-align: center"><i class="fa fa-user" style="margin-right: 15px"></i>Bienvenue !</h4>
+        <form>
+          <p style="margin-right: 20px;margin-left: 20px;">
+
+            <label><strong>Prénom :</strong></label>
+            <input ng-model="surname" class="w3-input w3-border w3-round" type="text" required>
+            <br>
+
+            <label style="margin-top: 5px"><strong>Âge :</strong></label>
+            <input ng-model="age" class="w3-input w3-border w3-round" type="number" required>
+            <br>
+
+            <label style="margin-right: 10px;margin-bottom: 5px;margin-top: 5px"><strong>Genre :</strong></label>
+            <br>
+            <label style="margin-right: 40px">
+              <input type="radio" ng-model="gender" value="0">
+              Homme
+            </label><br>
+
+            <label>
+              <input type="radio" ng-model="gender" value="1">
+              Femme
+            </label>
+            <br>
+            <br>
+            <label><strong>Profil diététique choisi :</strong></label><br>
+
+            <label style="margin-right: 20px">
+              <input type="radio" ng-model="profile" value="loseweight">
+              Minceur
+            </label><br>
+
+            <label style="margin-right: 20px">
+              <input type="radio" ng-model="profile" value="healthy">
+              Santé
+            </label><br>
+
+            <label>
+              <input type="radio" ng-model="profile" value="gainweight">
+              Sportif
+            </label>
+
+            <br><br>
+            <input ng-click="update()" style="margin-bottom: 15px;" type="submit" class="w3-btn w3-red w3-round w3-right" value="Sauvegarder">
+          </p>
+        </form>
+
+
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

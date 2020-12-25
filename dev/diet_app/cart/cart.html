@@ -1,0 +1,64 @@
+<div class="w3-margin" ng-controller="CartController">
+  <br>
+
+  <div class="w3-card-4 w3-round-large">
+    <header class="w3-light-grey w3">
+
+
+      <br>
+      <h3 style="text-align: center;">
+        <i class="w3-xxlarge fa fa-shopping-cart" style="margin-right: 15px;"></i>
+        Votre Panier
+      </h3>
+      <br>
+
+    </header>
+
+    <ul style="float: center;">
+
+
+      <li ng-repeat="product in cart" class="w3-bar">
+        <span ng-click="del(product.code)" onclick="this.parentElement.style.display='none'" class="w3-bar-item w3-button w3-xlarge w3-right w3-hover-red w3-round-large">&times;</span>
+        <img src="{{product.image_front_thumb_url}}" alt="{{product.generic_name}}" class="w3-bar-item " style="width:85px">
+        <div class="w3-bar-item">
+          <span class="w3-large"><strong>{{product.product_name}}</strong></span><br>
+          <span class="w3-large">Quantité : {{product.quantity}}
+            <i ng-click="incr(product.code)" style="margin-right: 10px;margin-left: 10px;" class="fa fa-plus-square w3-xlarge"></i>
+            <i ng-click="decr(product.code)" class="fa fa-minus-square w3-xlarge"></i>
+          </span><br>
+          <!---EN ATTENTE DE L'IMPLEMENTATION COMPLETE : notamment au niveau de advice et des statistiques
+          <span class="w3-large">Masse : {{product.masse}} g
+            <i ng-click="incr2(product.code)"style="margin-right: 10px;margin-left: 10px;" class="fa fa-plus-square w3-xlarge"></i>
+            <i ng-click="decr2(product.code)" class="fa fa-minus-square w3-xlarge"></i>
+          <span><img style="width: 75px;height: auto;" src="{{src_nutri(product.nutriscore_tag)}}"></a></span>
+          ---->
+          <hr>
+        </div>
+      </li>
+      <table class='w3-table' style="font-size: 15px">
+        <tr>
+          <th style="position: relative; bottom : 10px;"><img src="assets/co2.svg" style="width : 30px; margin-right : 10px">Bilan Carbone</th><th style="font-style: italic ">{{carbonFootprint}} gCO2/100g</th>
+        </tr>
+      </table>
+    </ul>
+    <!---- Ajouter un autre produit au panier et fin du panier ------->
+    <a ui-sref="search" class="w3-btn w3-grey w3-center w3-round w3-card-2" style="margin : 10px; margin-right: 0px"><i class="fa fa-search"></i></a>
+    <a ui-sref="scan" class="w3-btn w3-grey w3-center w3-round w3-card-2" style="margin : 10px;"><i class="fa fa-barcode"></i></a>
+    <a ui-sref="advice" class="w3-btn w3-green w3-right w3-round w3-card-2" style="margin : 10px;"><i class="fa fa-cart-arrow-down" style="margin-right : 7px;margin-left : 7px;"></i></a>
+    <!-----Welcome Modal ----------->
+    <div id="id_welcome" class="w3-modal" style="" ng-controller="WelcomeController">
+      <br>
+      <div class="w3-modal-content w3-animate-opacity w3-card-4 w3-round">
+        <div style="text-align: center; margin-top:40%;padding-top:20px;">
+          <img style='width:110px;height:auto;' src='assets/food-and-restaurant.svg'>
+        <div id="welcome_div" class="w3-container" style="margin-top:0px">
+        </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <br>
+  </div>
+</div>

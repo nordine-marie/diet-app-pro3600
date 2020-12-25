@@ -1,0 +1,165 @@
+<div class="w3-margin" ng-controller="SearchController">
+  <br>
+  <!----- Formulaire de recherche ----------->
+  <div class="w3-card-4 w3-round-large">
+    <header class="w3-container w3-round w3-light-grey">
+      <h3>
+        <i class="fa fa-search" style="margin-right: 10px;"></i>
+        Recherche un produit
+      </h3>
+    </header>
+
+
+    <input class="w3-input" type="text" ng-model="query" placeholder="Entre le nom d'un produit" style="height: 40px;width: 87%; margin-top: 0px;">
+    <button ng-click="search()" type="button" class="w3-btn w3-red w3-round-large w3-right" style="margin-right: 3px;margin-top: -40px;width: 13%;height: 40px;"><i class="fa fa-search"></i></button>
+    <br>
+  </div>
+
+  <!------ Loading (NE PAS MODIFIER)----------->
+  <div ng-show=showLoading style="padding-left : 38%;padding-top : 50%;" class="lds-roller">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <!------ Résultats de recherche ----------->
+
+
+
+  <br><br>
+  <div class="w3-card-4 w3-round-large" ng-show=showMe>
+
+    <header class="w3-container w3-light-grey w3-round">
+      <h4>Résultats :</h4>
+    </header>
+
+    <ul>
+
+      <li ng-repeat="product in products" class="w3-bar">
+        <hr>
+        <button ng-click="add(product)" class="w3-btn w3-circle w3-green w3-right w3-card-2" style="margin: 20px;" type="button"><i class="fa fa-cart-plus"></i></button>
+        <span ng-click="displayProduct(product)">
+          <img src="{{product.image_front_thumb_url}}" alt="{{product.generic_name}}" class="w3-bar-item" style="width:85px">
+          <div class="w3-bar-item">
+            <span class="w3-large">{{product.product_name}}</span><br>
+            <img style="width: 75px;height: auto;" src="{{src_nutri(product.nutrition_grades)}}"></a>
+          </div>
+        </span>
+
+        <!---------- Product Modal view ----------->
+        <div id="id_{{product.code}}" class="w3-modal">
+          <br>
+          <div class="w3-modal-content w3-card-4 w3-round">
+            <div class="w3-container" style="padding: 0px;">
+              <span ng-click="displayModal(product.code)" class="w3-button w3-display-topright w3-hover-red w3-round">&times;</span>
+              <!---  <span ng-click="alt(product.categories)" class="w3-button w3-display-topright w3-hover-red w3-round">&times;</span> --->
+              <div style="display: flex; margin-top: 5px; align-items: center;">
+                <img src="{{product.image_front_thumb_url}}" alt="{{product.generic_name}}" class="w3-bar-item" style="height:100px; width: auto ;">
+                <h3>{{product.product_name}}</h3>
+              </div>
+              <hr>
+              <!-- Description et caractéristiques du produit --->
+              <div style="display: flex;align-items: center;">
+                <p style="font-style: italic;margin-right:15px;margin-left:15px">{{product.generic_name}}</p>
+                <p style="padding-right:15px;margin-left:15px">
+                  <img style="width: 75px;height: auto;" src="{{src_nutri(product.nutrition_grades)}}"></a>
+                </p>
+                <p style="margin-right:10px">
+                  <button ng-click="addtofav(product)" class="w3-btn w3-circle w3-pink w3-card-2" type="button"><i class="fa fa-heart"></i></button>
+                </p>
+              </div>
+
+              <div>
+                <table class="w3-table w3-striped" style="margin-bottom: 15px">
+                  <tr>
+                    <th><strong>Marque</strong></th><th style='font-style :italic'><span style='margin-left: 5px' ng-repeat="brand in product.brands_tags">{{brand}}</span></th>
+                  </tr>
+                  <tr>
+                    <th><strong>Origine</strong></th><th style='font-style :italic'><span style='margin-left: 5px' ng-repeat="origin in product.origins_tags">{{origin}}</span></th>
+                  </tr>
+                  <tr>
+                    <th><strong>Empreinte Carbone (gC02/100g)</strong></th><th style='font-style :italic'>{{product.nutriments["carbon-footprint-from-known-ingredients_100g"]}}</th>
+                  </tr>
+
+                </table>
+              </div>
+              <button ng-click="add(product)" class="w3-button w3-block w3-green"><i class="fa fa-cart-plus"></i> Ajouter au panier</button>
+              <hr>
+              <h6 style="margin-right:15px;margin-left:15px"><strong>Nous vous conseillons aussi :</strong></h6>
+
+              <section class="">
+                <!--Loading animation----
+                <div style='padding-left: 40%'>
+                <div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                </div>
+                <!----------------------->
+                <ul class="carousel-items">
+                  <li ng-repeat="product in altproducts" class="carousel-item">
+                    <div ng-click="displayAlt(product.code)" style="height: 100px; text-align: center; display: table-cell; vertical-align: middle;">
+                      <img src="{{product.image_front_thumb_url}}" alt="{{product.generic_name}}">
+                    </div>
+                  </li>
+                </ul>
+              </section>
+              <br>
+            </div>
+          </div>
+        </div>
+        <!--------------END MODAL---------------------->
+
+      </li>
+
+    </ul>
+
+  </div>
+
+  <div id="id_alt{{altproduct.code}}" class="w3-modal">
+    <br>
+    <div class="w3-modal-content w3-card-4 w3-round">
+      <div class="w3-container" style="padding: 0px;">
+        <span ng-click="displayModal('alt'+altproduct.code)" class="w3-button w3-display-topright w3-hover-red w3-round">&times;</span>
+        <!---  <span ng-click="alt(product.categories)" class="w3-button w3-display-topright w3-hover-red w3-round">&times;</span> --->
+        <div style="display: flex; margin: 10px; align-items: center;">
+          <img src="{{altproduct.image_front_thumb_url}}" alt="{{altproduct.generic_name}}" class="w3-bar-item" style="height:100px; width: auto ;margin-right:10px;">
+          <h3>{{altproduct.product_name}}</h3>
+        </div>
+        <hr>
+        <!-- Description et caractéristiques du produit --->
+        <div style="display: flex;align-items: center;">
+          <p style="font-style: italic;margin-right:15px;margin-left:15px">{{altproduct.generic_name}}</p>
+          <p style="padding-right:15px;margin-left:15px">
+            <img style="width: 75px;height: auto;" src="{{src_nutri(altproduct.nutrition_grades)}}"></a>
+          </p>
+          <p style="margin-right:10px">
+            <button ng-click="addtofav(altproduct)" class="w3-btn w3-circle w3-pink w3-card-2" type="button"><i class="fa fa-heart"></i></button>
+          </p>
+        </div>
+
+        <div>
+          <table class="w3-table w3-striped" style="margin-bottom: 15px">
+            <tr>
+              <th><strong>Marque</strong></th><th style='font-style :italic'><span style='margin-left: 5px' ng-repeat="brand in altproduct.brands_tags">{{brand}}</span></th>
+            </tr>
+            <tr>
+              <th><strong>Origine</strong></th><th style='font-style :italic'><span style='margin-left: 5px' ng-repeat="origin in altproduct.origins_tags">{{origin}}</span></th>
+            </tr>
+            <tr>
+              <th><strong>Empreinte Carbone (gC02/100g)</strong></th><th style='font-style :italic'>{{altproduct.nutriments["carbon-footprint-from-known-ingredients_100g"]}}</th>
+            </tr>
+
+          </table>
+        </div>
+        <button ng-click="add(altproduct)" class="w3-button w3-block w3-green"><i class="fa fa-cart-plus"></i> Ajouter au panier</button>
+        <br>
+      </div>
+    </div>
+  </div>
+
+
+
+  <br><br>
+  <button ng-click=gotoTop() class="topbutton"><i class="fa fa-arrow-up"></i></button>

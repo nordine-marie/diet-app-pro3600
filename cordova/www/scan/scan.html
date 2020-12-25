@@ -1,0 +1,58 @@
+<div class="w3-margin" ng-controller="ScanController">
+
+  <br>
+
+  <!------- Formulaire ------------>
+
+  <div class="w3-card-4 w3-round-large">
+
+    <div class="w3-container w3-light-grey">
+      <h3><i class="fa fa-barcode" style="margin-right: 12px;"></i>Entre ou scan ton code-barre</h3>
+    </div>
+
+    <div id='camera' ng-show=showCam style='width : 50%'>
+    <!----- Quagga Camera ----->
+    </div>
+
+
+    <div class="w3-rest w3-round">
+      <input class="w3-input" ng-model="barcode" style="width: 90%;float: center;margin: 10px;" type="text" placeholder="Code-barre">
+    </div>
+
+    <button class="w3-button w3-round w3-red" ng-click="code_to_product()" type="button" style="margin-left: 5px;">
+      <i class="w3-xxlarge fa fa-search"></i>
+    </button>
+    <button class="w3-button w3-round w3-red" type="button" ng-click='displayCam()' style="border: none;">
+      <i class="w3-xxlarge fa fa-camera"></i>
+    </button>
+
+    <br>
+    <br>
+
+  </div>
+
+
+  <br><br>
+
+  <!------- Résultat du barcode ------------>
+
+  <div class="w3-card-4" ng-show="showMe">
+
+    <header class="w3-container w3-light-grey">
+
+      <h3><strong>{{product.product_name}}</strong></h3>
+    </header>
+
+    <div class="w3-container">
+      <p>{{product.generic_name}}</p>
+      <img src="{{product.image_front_thumb_url}}" class="w3-border w3-padding" alt="{{product.generic_name}}" class="w3-left">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+        aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    </div>
+
+    <button ng-click="add(product)" class="w3-button w3-block w3-green"><i class="fa fa-cart-plus"></i> Ajouter au panier</button>
+
+  </div>
+
+
+</div>
